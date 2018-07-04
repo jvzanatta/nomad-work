@@ -14,6 +14,16 @@ class Review extends Model
     protected $table = 'reviews';
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'beverages' => 'array',
+        'foods' => 'array',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -38,7 +48,7 @@ class Review extends Model
      */
     public function place()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\Place');
     }
 
     /**
@@ -46,7 +56,7 @@ class Review extends Model
      */
     public function reviewer()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
 }

@@ -14,9 +14,11 @@ class PlacesTableSeeder extends Seeder
      */
     public function run()
     {
-        App\Models\User::all()->each(function ($user) {
-            // Create 3 places for each of the registeres users
-            for ($i = 0; $i < 3; $i++) {
+        $placesPerUser = 4;
+
+        App\Models\User::all()->each(function ($user) use ($placesPerUser) {
+            // Create $placesPerUser places for each of the registeres users
+            for ($i = 0; $i < $placesPerUser; $i++) {
                 $user->registeredPlaces()->save(factory(App\Models\Place::class)->make());
             }
         });

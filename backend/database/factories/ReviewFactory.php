@@ -5,18 +5,18 @@ use Faker\Generator as Faker;
 use App\Models\Review as Review;
 
 $factory->define(Review::class, function (Faker $faker) {
+    $foods = ['Salgados', 'Doces', 'Refeições', 'Porções', 'Salgadinhos'];
+    $beverages = ['Água', 'Refrigerantes', 'Café', 'Cerveja', 'Drinks'];
     $hasInternet = $faker->boolean($chanceOfGettingTrue = 80);
     $hasPassword = $hasInternet ? $faker->boolean : null;
 
     return [
-        'user_id' => $faker->numberBetween(1, 10),
-        //'place_id' => $faker->,
         'internet_exists' => $hasInternet,
         'internet_speed' => $hasInternet ? $faker->numberBetween(10, 100).'mb' : null,
         'internet_has_password' => $hasPassword,
         'internet_password' => $hasPassword ? $faker->asciify('********') : null,
-        //'beverages' => $faker->,
-        //'foods' => $faker->,
+        'beverages' => $faker->randomElements($beverages, $faker->numberBetween(1, 4)),
+        'foods' => $faker->randomElements($foods, $faker->numberBetween(1, 4)),
         'service_rating' => $faker->numberBetween(1, 5),
         'price_rating' => $faker->numberBetween(1, 5),
         'coziness_rating' => $faker->numberBetween(1, 5),

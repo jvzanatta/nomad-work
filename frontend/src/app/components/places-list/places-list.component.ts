@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material';
 
 import { PlacesService } from '../../services/places.service';
 
@@ -8,17 +9,34 @@ import { PlacesService } from '../../services/places.service';
   styleUrls: ['./places-list.component.css']
 })
 export class PlacesListComponent implements OnInit {
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   places: Array<any> = new Array();
+  pageSize = 9;
 
   constructor(private _placesService: PlacesService) { }
 
   ngOnInit() {
-    this._placesService.searchPlaces(1)
-    .subscribe(response => {
-      this.places = response.data;
-      console.log(response, this.places);
-    });
+    this.getPlacesList();
+  }
+
+  // TODO: paginate the list
+  getPlacesList(pageNumber: number = 1) {
+    this._placesService.getPlaces(pageNumber)
+      .subscribe(response => this.handleResponse(response));
+  }
+
+  handleResponse(response) {
+    this.places = response.data;
+    this.toPaginator(response.total);
+  }
+
+  toPaginator(total: number, ) {
+    this.paginator.length = total;
+  }
+
+  changePage($event) {
+    console.log($event);
+    this.getPlacesList($event.pageIndex + 1);
   }
 
 }

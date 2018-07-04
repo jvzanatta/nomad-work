@@ -24,37 +24,24 @@ export class PlacesService {
 
   constructor(private http: HttpClient) { }
 
-  /** GET places from the API */
-  searchPlaces(pageNumber = 1, sortOrder = 'asc', filter = ''):  Observable<any> {
-
+  /** GET paginated places from the API */
+  getPlaces(pageNumber = 1):  Observable<any> {
     return this.http.get(this.placesUrl, {
         params: new HttpParams()
-            .set('filter', filter)
-            .set('sortOrder', sortOrder)
+            // .set('filter', filter)
+            // .set('sortOrder', sortOrder)
             .set('page', pageNumber.toString())
       });
   }
 
 
   /** GET place by id */
-  getPlace(id: number | string): Observable<any> {
+  getPlace (id: number | string): Observable<any> {
     const url = `${this.placesUrl}/${id}`;
     return this.http.get<any>(url).pipe(
       catchError(this.handleError)
     );
   }
-
-  /* GET Places whose name contains search term */
-  // searchPlaces(term: string): Observable<Place[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty place array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Place[]>(`${this.placesUrl}/?name=${term}`).pipe(
-  //     catchError(this.handleError<Place[]>('searchPlaces', []))
-  //   );
-  // }
-
 
   /** Store a new place */
   addPlace (place: any): Observable<any> {

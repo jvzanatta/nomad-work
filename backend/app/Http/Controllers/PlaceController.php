@@ -9,12 +9,13 @@ class PlaceController extends Controller
 {
     /**
      * Display a listing of the places.
+     * TODO: Allow parameters (like itens per page)
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return Place::paginate();
+        return Place::paginate(9);
     }
 
     /**

@@ -1,98 +1,132 @@
-<mat-card>
+<mat-card *ngIf="loading">
+  <div class="div-loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>
+
+<mat-toolbar>
+  <span>{{place.name}}</span>
+</mat-toolbar>
+
+
+<mat-card *ngIf="!loading">
   <div class="container">
     <mat-form-field>
       <input matInput placeholder="Nome"
-        [readonly]="placeReadOnly" [(ngModel)]="place.name">
+        [readonly]="readOnly" [(ngModel)]="place.name">
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="Endereço"
-          [readonly]="placeReadOnly" [(ngModel)]="place.address">
+          [readonly]="readOnly" [(ngModel)]="place.address">
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="Cidade"
-          [readonly]="placeReadOnly" [(ngModel)]="place.city">
+          [readonly]="readOnly" [(ngModel)]="place.city">
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="Estado"
-          [readonly]="placeReadOnly" [(ngModel)]="place.state">
+          [readonly]="readOnly" [(ngModel)]="place.state">
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="País"
-          [readonly]="placeReadOnly" [(ngModel)]="place.country">
+          [readonly]="readOnly" [(ngModel)]="place.country">
     </mat-form-field>
 
     <mat-form-field>
       <mat-select placeholder="Selecione"
-        [disabled]="placeReadOnly" [(ngModel)]="place.type">
+        [disabled]="readOnly" [(ngModel)]="place.type">
         <mat-option *ngFor="let option of typeOptions" [value]="option">{{option}}</mat-option>
       </mat-select>
     </mat-form-field>
 
   </div>
+
+  <mat-chip-list>
+    <mat-chip selected>{{place?.reviews?.length}} Avaliações de usuários!</mat-chip>
+
+    <mat-chip selected> Avaliação:
+      <mat-icon *ngFor="let i of avgOverallRating | numToArray">star_rate</mat-icon>
+    </mat-chip>
+
+    <mat-chip selected> Atendimento:
+      <mat-icon *ngFor="let i of avgServiceRating | numToArray">star_rate</mat-icon>
+    </mat-chip>
+
+    <mat-chip selected> Preços:
+      <mat-icon *ngFor="let i of avgPriceRating | numToArray">star_rate</mat-icon>
+    </mat-chip>
+
+    <mat-chip selected> Conforto:
+      <mat-icon *ngFor="let i of avgCozinessRating | numToArray">star_rate</mat-icon>
+    </mat-chip>
+
+    <mat-chip selected> Silêncio:
+      <mat-icon *ngFor="let i of avgQuietnessRating | numToArray">star_rate</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+
+  <br/>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let review of place.reviews">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{review.created_at | date: 'dd/MM/yyyy hh:mm'}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Avaliação Geral:
+          <mat-icon *ngFor="let review of review.overall_rating | numToArray">star_rate</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="container" >
+        <mat-checkbox [(ngModel)]="review.internet_exists" [disabled]="readOnly">Possui Wi-Fi</mat-checkbox>
+
+        <mat-form-field>
+            <input matInput placeholder="Velocidade da Internet" [readonly]="readOnly" [(ngModel)]="review.internet_speed">
+        </mat-form-field>
+
+        <mat-checkbox [(ngModel)]="review.internet_has_password" [disabled]="readOnly">Wi-Fi possui senha</mat-checkbox>
+
+        <mat-form-field>
+          <input matInput placeholder="Senha Wi-Fi" [readonly]="readOnly" [(ngModel)]="review.internet_password">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Bebidas" [readonly]="readOnly" [(ngModel)]="review.beverages">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Comidas" [readonly]="readOnly" [(ngModel)]="review.foods">
+        </mat-form-field>
+
+        <mat-list>
+          <mat-list-item>
+              Atendimento:
+              <mat-icon *ngFor="let service of review.service_rating | numToArray">star_rate</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item>
+              Preços:
+              <mat-icon *ngFor="let review of review.price_rating | numToArray">attach_money</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item>
+              Conforto:
+              <mat-icon *ngFor="let review of review.coziness_rating | numToArray">star_rate</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item>
+              Silêncio:
+              <mat-icon *ngFor="let review of review.quietness_rating | numToArray">star_rate</mat-icon>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
 </mat-card>
-
-<mat-divider></mat-divider>
-
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let review of place.reviews">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{review.created_at | date: 'dd/MM/yyyy hh:mm'}}
-      </mat-panel-title>
-      <mat-panel-description>
-        Avaliação Geral:
-        <mat-icon *ngFor="let review of review.overall_rating | numToArray">star_rate</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <div class="container" >
-      <mat-checkbox [(ngModel)]="review.internet_exists" [disabled]="reviewReadOnly"
-        (change)="setInternetFields($event)">Possui Wi-Fi</mat-checkbox>
-
-      <mat-form-field>
-          <input matInput placeholder="Velocidade da Internet"
-            [disabled]="disableInternetSpeed || reviewReadOnly" [(ngModel)]="review.internet_speed">
-      </mat-form-field>
-
-      <mat-checkbox [(ngModel)]="review.internet_has_password" (change)="setInternetPasswordField($event)"
-        [disabled]="disableHasPassword || reviewReadOnly" >Wi-Fi possui senha</mat-checkbox>
-
-      <mat-form-field>
-        <input matInput placeholder="Senha Wi-Fi" [disabled]="disablePassword || reviewReadOnly"
-          [(ngModel)]="review.internet_password">
-      </mat-form-field>
-
-      <mat-list>
-        <mat-list-item>
-            Atendimento:
-            <mat-icon *ngFor="let service of review.service_rating | numToArray">star_rate</mat-icon>
-        </mat-list-item>
-
-        <mat-list-item>
-            Preços:
-            <mat-icon *ngFor="let review of review.price_rating | numToArray">attach_money</mat-icon>
-        </mat-list-item>
-
-        <mat-list-item>
-            Conforto:
-            <mat-icon *ngFor="let review of review.coziness_rating | numToArray">star_rate</mat-icon>
-        </mat-list-item>
-
-        <mat-list-item>
-            Silêncio:
-            <mat-icon *ngFor="let review of review.quietness_rating | numToArray">star_rate</mat-icon>
-        </mat-list-item>
-      </mat-list>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
-
-
-<!--
-'beverages',
-'foods',
--->

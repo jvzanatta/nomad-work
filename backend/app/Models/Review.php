@@ -14,16 +14,6 @@ class Review extends Model
     protected $table = 'reviews';
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'beverages' => 'array',
-        'foods' => 'array',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array

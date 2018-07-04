@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatProgressSpinnerModule, MatInputModule,
   MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule, MatGridListModule,
   MatCardModule, MatMenuModule, MatCheckboxModule, MatRadioModule, MatFormFieldModule, MatSelectModule,
-  MatExpansionModule } from '@angular/material';
+  MatExpansionModule, MatChipsModule } from '@angular/material';
 
 // Components
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
@@ -26,27 +26,24 @@ import { PlacesListComponent } from './components/places-list/places-list.compon
 // Services
 import { PlacesService } from './services/places.service';
 import { UsersService } from './services/users.service';
-import { NumToArrayPipe } from './num-to-array.pipe';
 
+// Pipes
+import { NumToArrayPipe } from './pipes/num-to-array.pipe';
+
+// TODO: move to routing file
 const appRoutes: Routes = [
   { path: 'search', component: SearchComponent },
-
   { path: 'user', component: UserComponent },
-
   { path: 'about', component: AboutComponent },
-
   { path: 'user/:id/reviews', component: PlacesListComponent },
   { path: 'places', component: PlacesListComponent },
-
   { path: 'place/:id', component: PlaceFormComponent },
   { path: 'place/add', component: PlaceFormComponent },
-
   { path: 'place/:id/review/add', component: ReviewFormComponent },
 
   { path: '', redirectTo: '/places', pathMatch: 'full' },
   { path: '**', redirectTo: '/places' }
 ];
-
 
 @NgModule({
   declarations: [
@@ -58,7 +55,7 @@ const appRoutes: Routes = [
     ReviewFormComponent,
     PlaceFormComponent,
     PlacesListComponent,
-    NumToArrayPipe
+    NumToArrayPipe,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +68,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    MatChipsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatRadioModule,

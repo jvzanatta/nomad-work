@@ -19,3 +19,10 @@
 .container > * {
   width: 100%;
 }
+
+/* Center Spinner */
+.div-loading-spinner {
+  z-index: 999;
+  width: 2em;
+  margin: auto;
+}

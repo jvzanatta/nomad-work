@@ -17,8 +17,4 @@ export class NavigationMenuComponent {
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
-  print(text) {
-    console.log(text);
-  }
-
   }

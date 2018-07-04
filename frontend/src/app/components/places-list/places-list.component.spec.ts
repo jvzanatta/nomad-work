@@ -1,19 +1,19 @@
 
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlacesComponent } from './places.component';
+import { PlacesListComponent } from './places-list.component';
 
-describe('PlacesComponent', () => {
-  let component: PlacesComponent;
-  let fixture: ComponentFixture<PlacesComponent>;
+describe('PlacesListComponent', () => {
+  let component: PlacesListComponent;
+  let fixture: ComponentFixture<PlacesListComponent>;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlacesComponent ]
+      declarations: [ PlacesListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlacesComponent);
+    fixture = TestBed.createComponent(PlacesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

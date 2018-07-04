@@ -1,0 +1,22 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-grid-list cols="3" rowHeight="250px">
+    <mat-grid-tile *ngFor="let place of places" [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card"  routerLink="/places/{{place.id}}" >
+        <mat-card-header>
+          <mat-card-title>
+            <b>{{place.name}}</b>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div>{{place.type}}</div>
+          <div>{{place.address}}</div>
+          <div>{{place.city}}</div>
+          <div>{{place.state}}</div>
+          <div>{{place.country}}</div>
+          <div>{{place.reviews.length}} Avaliações</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

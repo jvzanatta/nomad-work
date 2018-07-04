@@ -37,7 +37,7 @@ export class PlacesService {
 
 
   /** GET place by id */
-  getPlace(id: number): Observable<any> {
+  getPlace(id: number | string): Observable<any> {
     const url = `${this.placesUrl}/${id}`;
     return this.http.get<any>(url).pipe(
       catchError(this.handleError)

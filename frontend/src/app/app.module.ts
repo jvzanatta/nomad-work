@@ -7,13 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatProgressSpinnerModule,
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatProgressSpinnerModule, MatInputModule,
   MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule, MatGridListModule,
-  MatCardModule, MatMenuModule } from '@angular/material';
+  MatCardModule, MatMenuModule, MatCheckboxModule, MatRadioModule, MatFormFieldModule, MatSelectModule,
+  MatExpansionModule } from '@angular/material';
 
 // Components
+import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
 import { AboutComponent } from './components/about/about.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserComponent } from './components/user/user.component';
@@ -24,6 +26,7 @@ import { PlacesListComponent } from './components/places-list/places-list.compon
 // Services
 import { PlacesService } from './services/places.service';
 import { UsersService } from './services/users.service';
+import { NumToArrayPipe } from './num-to-array.pipe';
 
 const appRoutes: Routes = [
   { path: 'search', component: SearchComponent },
@@ -54,18 +57,27 @@ const appRoutes: Routes = [
     UserComponent,
     ReviewFormComponent,
     PlaceFormComponent,
-    PlacesListComponent
+    PlacesListComponent,
+    NumToArrayPipe
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    RouterModule.forRoot(appRoutes/*, { enableTracing: true }*/),
     LayoutModule,
     MatToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,

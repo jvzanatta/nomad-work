@@ -1,3 +1,98 @@
-<p>
-  place-form works!
-</p>
+<mat-card>
+  <div class="container">
+    <mat-form-field>
+      <input matInput placeholder="Nome"
+        [readonly]="placeReadOnly" [(ngModel)]="place.name">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Endereço"
+          [readonly]="placeReadOnly" [(ngModel)]="place.address">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Cidade"
+          [readonly]="placeReadOnly" [(ngModel)]="place.city">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Estado"
+          [readonly]="placeReadOnly" [(ngModel)]="place.state">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="País"
+          [readonly]="placeReadOnly" [(ngModel)]="place.country">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Selecione"
+        [disabled]="placeReadOnly" [(ngModel)]="place.type">
+        <mat-option *ngFor="let option of typeOptions" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+</mat-card>
+
+<mat-divider></mat-divider>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let review of place.reviews">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{review.created_at | date: 'dd/MM/yyyy hh:mm'}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Avaliação Geral:
+        <mat-icon *ngFor="let review of review.overall_rating | numToArray">star_rate</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="container" >
+      <mat-checkbox [(ngModel)]="review.internet_exists" [disabled]="reviewReadOnly"
+        (change)="setInternetFields($event)">Possui Wi-Fi</mat-checkbox>
+
+      <mat-form-field>
+          <input matInput placeholder="Velocidade da Internet"
+            [disabled]="disableInternetSpeed || reviewReadOnly" [(ngModel)]="review.internet_speed">
+      </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="review.internet_has_password" (change)="setInternetPasswordField($event)"
+        [disabled]="disableHasPassword || reviewReadOnly" >Wi-Fi possui senha</mat-checkbox>
+
+      <mat-form-field>
+        <input matInput placeholder="Senha Wi-Fi" [disabled]="disablePassword || reviewReadOnly"
+          [(ngModel)]="review.internet_password">
+      </mat-form-field>
+
+      <mat-list>
+        <mat-list-item>
+            Atendimento:
+            <mat-icon *ngFor="let service of review.service_rating | numToArray">star_rate</mat-icon>
+        </mat-list-item>
+
+        <mat-list-item>
+            Preços:
+            <mat-icon *ngFor="let review of review.price_rating | numToArray">attach_money</mat-icon>
+        </mat-list-item>
+
+        <mat-list-item>
+            Conforto:
+            <mat-icon *ngFor="let review of review.coziness_rating | numToArray">star_rate</mat-icon>
+        </mat-list-item>
+
+        <mat-list-item>
+            Silêncio:
+            <mat-icon *ngFor="let review of review.quietness_rating | numToArray">star_rate</mat-icon>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<!--
+'beverages',
+'foods',
+-->

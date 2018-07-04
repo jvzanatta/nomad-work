@@ -14,7 +14,7 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        return Place::with(['registeredBy', 'reviews.reviewer'])->paginate();
+        return Place::paginate();
     }
 
     /**

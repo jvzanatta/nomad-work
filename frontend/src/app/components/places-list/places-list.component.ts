@@ -19,6 +19,7 @@ export class PlacesListComponent implements OnInit {
 
   constructor(private _placesService: PlacesService) { }
 
+  // TODO: Adicionar filtro por localização do usuário
   ngOnInit() {
     this.getPlacesList();
   }

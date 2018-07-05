@@ -5,7 +5,9 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-// The HTTP options that will be send with the request
+/**
+ * The HTTP options that will be send with the request
+ */
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',

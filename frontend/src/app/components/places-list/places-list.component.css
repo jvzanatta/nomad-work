@@ -23,3 +23,10 @@
 .page-title > b {
   font-size: 18px;
 }
+
+/* Center Spinner */
+.div-loading-spinner {
+  z-index: 999;
+  width: 2em;
+  margin: auto;
+}

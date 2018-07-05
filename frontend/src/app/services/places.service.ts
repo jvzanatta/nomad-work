@@ -5,8 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-// import { Place } from './place';
-
+// The HTTP options that will be send with the request
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
@@ -14,28 +13,34 @@ const httpOptions = {
   })
 };
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
-
+  /**
+   * The url to call
+   * TODO: Create enrironment config file to encapsulate the server's adreess
+   */
   private placesUrl = 'http://localhost:8000/api/places';
 
   constructor(private http: HttpClient) { }
 
-  /** GET paginated places from the API */
+  /**
+   * GET paginated places from the API
+   * @param pageNumber the page number (starts at 1)
+   * TODO: Add sorting parameter
+   */
   getPlaces(pageNumber = 1):  Observable<any> {
     return this.http.get(this.placesUrl, {
         params: new HttpParams()
-            // .set('filter', filter)
-            // .set('sortOrder', sortOrder)
             .set('page', pageNumber.toString())
       });
   }
 
-
-  /** GET place by id */
+  /**
+   * GET the place by it's id
+   * @param id the id of the place
+   */
   getPlace (id: number | string): Observable<any> {
     const url = `${this.placesUrl}/${id}`;
     return this.http.get<any>(url).pipe(
@@ -43,7 +48,10 @@ export class PlacesService {
     );
   }
 
-  /** Store a new place */
+  /**
+   * Store a new place into the server
+   * @param place the place object that will be stored
+   */
   addPlace (place: any): Observable<any> {
     return this.http.post<any>(this.placesUrl, place, httpOptions).pipe(
       catchError(this.handleError)
@@ -51,31 +59,21 @@ export class PlacesService {
   }
 
   /**
-   * Handle failed Http operation.
+   * Handle failed Http operations
    * @param operation - operation name
    * @param result - the observable result
    */
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
+      console.error('Um erro ocorreu:', error.error.message);
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Erro no servidor código ${error.status}, ` +
+        `mensagem: ${error.error}`);
     }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
 
-  // private handleError<T> (operation = 'operation', result?: T) {
-  //   return (error: any): Observable<T> => {
-  //     console.error(error);
-  //     return of(result as T);
-  //   };
-  // }
+    return throwError(
+      'Algo deu errado, por favor tente novamente mais tarde.');
+  }
 
 }

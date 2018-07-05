@@ -19,9 +19,9 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
 import { AboutComponent } from './components/about/about.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserComponent } from './components/user/user.component';
-import { ReviewFormComponent } from './components/review-form/review-form.component';
 import { PlaceFormComponent } from './components/place-form/place-form.component';
 import { PlacesListComponent } from './components/places-list/places-list.component';
+import { UserReviewsListComponent } from './components/user-reviews-list/user-reviews-list.component';
 
 // Services
 import { PlacesService } from './services/places.service';
@@ -33,13 +33,11 @@ import { NumToArrayPipe } from './pipes/num-to-array.pipe';
 // TODO: move to routing file
 const appRoutes: Routes = [
   { path: 'search', component: SearchComponent },
-  { path: 'user', component: UserComponent },
+  { path: 'user/:id', component: UserComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'user/:id/reviews', component: PlacesListComponent },
+  { path: 'user/:id/reviews', component: UserReviewsListComponent },
   { path: 'places', component: PlacesListComponent },
   { path: 'place/:id', component: PlaceFormComponent },
-  { path: 'place/add', component: PlaceFormComponent },
-  { path: 'place/:id/review/add', component: ReviewFormComponent },
 
   { path: '', redirectTo: '/places', pathMatch: 'full' },
   { path: '**', redirectTo: '/places' }
@@ -52,10 +50,10 @@ const appRoutes: Routes = [
     AboutComponent,
     SearchComponent,
     UserComponent,
-    ReviewFormComponent,
     PlaceFormComponent,
     PlacesListComponent,
     NumToArrayPipe,
+    UserReviewsListComponent,
   ],
   imports: [
     BrowserModule,

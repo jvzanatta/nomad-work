@@ -1,8 +1,23 @@
-<mat-toolbar>
+<mat-toolbar *ngIf="!hideToolbar">
   <span>Locais Cadastrados</span>
 </mat-toolbar>
 
-<div class="grid-container">
+<mat-card *ngIf="loading">
+  <div class="div-loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="!loading && places?.length === 0">
+  <mat-card-header>
+    <mat-card-title>Não há registros para exibir</mat-card-title>
+    <mat-card-subtitle>
+      Tente utilizar outros parâmetros na sua busca ou cadastrar um novo local.
+    </mat-card-subtitle>
+  </mat-card-header>
+</mat-card>
+
+<div class="grid-container" *ngIf="places?.length > 0">
   <mat-grid-list cols="3" rowHeight="220px">
     <mat-grid-tile *ngFor="let place of places" [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card"  routerLink="/place/{{place.id}}" >

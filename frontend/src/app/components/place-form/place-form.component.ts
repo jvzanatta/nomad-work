@@ -11,6 +11,7 @@ import { Observable, of, throwError, Subject } from 'rxjs';
 })
 export class PlaceFormComponent implements OnInit {
 
+  // TODO: Get list from server
   typeOptions: Array<string> = ['Café', 'Restaurante', 'Coworking', 'Livraria', 'Outro'];
   place: any = {};
   readOnly: boolean;
@@ -45,6 +46,7 @@ export class PlaceFormComponent implements OnInit {
    * Get place's data from server using PlacesService
    */
   getPlaceData() {
+    this.loading = true;
     this.place = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this._placesService.getPlace(params.get('id')))
       ).subscribe(place => {
@@ -66,6 +68,8 @@ export class PlaceFormComponent implements OnInit {
    * TODO: Get from server side instead of calculating it
    */
   calculateAverageRatings() {
+    const ratings = this.place.reviews.length;
+
     this.avgOverallRating = 0;
     this.avgServiceRating = 0;
     this.avgPriceRating = 0;
@@ -79,11 +83,11 @@ export class PlaceFormComponent implements OnInit {
       this.avgCozinessRating += review.coziness_rating;
       this.avgQuietnessRating += review.quietness_rating;
     });
-    this.avgOverallRating = Math.round(this.avgOverallRating / this.place.reviews.length);
-    this.avgServiceRating = Math.round(this.avgServiceRating / this.place.reviews.length);
-    this.avgPriceRating = Math.round(this.avgPriceRating / this.place.reviews.length);
-    this.avgCozinessRating = Math.round(this.avgCozinessRating / this.place.reviews.length);
-    this.avgQuietnessRating = Math.round(this.avgQuietnessRating / this.place.reviews.length);
-  }
 
+    this.avgOverallRating = Math.round(this.avgOverallRating / ratings);
+    this.avgServiceRating = Math.round(this.avgServiceRating / ratings);
+    this.avgPriceRating = Math.round(this.avgPriceRating / ratings);
+    this.avgCozinessRating = Math.round(this.avgCozinessRating / ratings);
+    this.avgQuietnessRating = Math.round(this.avgQuietnessRating / ratings);
+  }
 }

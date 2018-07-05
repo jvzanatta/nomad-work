@@ -11,5 +11,3 @@ Route::apiResources([
     'reviews' => 'ReviewController',
     'users' => 'UserController'
 ]);
-
-Route::post('places/{place}/review', 'RatingController@store');

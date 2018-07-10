@@ -1,7 +1,4 @@
 
-npm run compodoc
-
-
 # Tem Wi-Fi?
 
 Esse projeto tem como objetivo o desenvolvimento de uma plataforma onde pessoas poderiam encontrar facilmente bons locais abertos para trabalhar. 

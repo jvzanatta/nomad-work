@@ -9,7 +9,7 @@ O front-end do projeto é feito em Angular 6 e o back-end com Laravel 5.6 e MySQ
 
 O primeiro passo para iniciar nesse projeto é clonar o repositório. Para isso execute no terminal o seguinte comando:
 ```
-git clone git@git.vibbra.com.br:candidatos/JoaoVictorZanatta.git
+git clone git@github.com:jvzanatta/nomad-work.git
 ```
 
 ### Pré-requisitos
